@@ -1,0 +1,120 @@
+{
+  "Version": 1,
+  "UUID": "2039a40d-d27a-442b-85c5-c325a9d42e4a",
+  "Name": "predictionMarket",
+  "Properties": {
+    "description": "MVP Prediction Market",
+    "language": "en"
+  },
+  "PropertiesSchemaFile": "properties_schema.json",
+  "DHTConfig": {
+    "HashType": "sha2-256"
+  },
+  "Zomes": [
+    {
+      "Name": "predictedEvent",
+      "Description": "Event predicted to occur or not by a specific date. Allows speculation.",
+      "RibosomeType": "js",
+      "CodeFile": "predictedevent.js",
+      "Entries": [
+        {
+          "Name": "event",
+          "Required": true,
+          "DataFormat": "json",
+          "Sharing": "public",
+          "SchemaFile": "event.json"
+        },
+        {
+          "Name": "limitOrder",
+          "Required": true,
+          "DataFormat": "json",
+          "Sharing": "public",
+          "SchemaFile": "limitOrder.json"
+        },
+        {
+          "Name": "userOrderLink",
+          "DataFormat": "links"
+        },
+        {
+          "Name": "eventOrderLink",
+          "DataFormat": "links"
+        }
+      ],
+      "Functions": [
+        {
+          "Name": "eventCreate",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "eventRead",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "eventUpdate",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "limitOrderCreate",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "limitOrderRead",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "setEventOutcome",
+          "CallingType": "json",
+          "Exposure": ""
+        },
+        {
+          "Name": "getBalance",
+          "CallingType": "json",
+          "Exposure": ""
+        }
+      ]
+    },
+    {
+      "Name": "anchors",
+      "Description": "anchors mixin",
+      "RibosomeType": "js",
+      "CodeFile": "anchors.js",
+      "Config": {
+        "ErrorHandling": "throwErrors"
+      },
+      "Entries": [
+        {
+          "Name": "anchor",
+          "DataFormat": "json",
+          "SchemaFile": "anchor.json",
+          "Sharing": "public"
+        },
+        {
+          "Name": "anchor_link",
+          "DataFormat": "links"
+        }
+      ],
+      "Functions": [
+        {
+          "Name": "anchor",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "exists",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "anchors",
+          "CallingType": "string",
+          "Exposure": "public"
+        }
+      ]
+    }
+  ]
+}

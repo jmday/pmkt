@@ -1,0 +1,63 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "mktName",
+    "mktDescription",
+    "endDate",
+    "outcome"
+  ],
+  "properties": {
+    "mktName": {
+      "$id": "#/properties/mktName",
+      "type": "string",
+      "title": "The Mktname Schema",
+      "default": "",
+      "examples": [
+        "Trump Impeachment"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "mktDescription": {
+      "$id": "#/properties/mktDescription",
+      "type": "string",
+      "title": "The Mktdescription Schema",
+      "default": "",
+      "examples": [
+        "Will Trump be impeached by Jan 1, 2020"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "endDate": {
+      "$id": "#/properties/endDate",
+      "type": "string",
+      "title": "The Enddate Schema",
+      "default": "",
+      "examples": [
+        "2020-01-01T04:00:00.000Z"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "outcome": {
+      "$id": "#/properties/outcome",
+      "type": "boolean",
+      "title": "The Outcome Schema",
+      "default": false,
+      "examples": [
+        true
+      ]
+    },
+    "hasOutcome": {
+      "$id": "#/properties/outcome",
+      "type": "boolean",
+      "title": "The Outcome Schema",
+      "default": false,
+      "examples": [
+        false
+      ]
+    }
+  }
+}

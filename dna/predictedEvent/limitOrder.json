@@ -1,0 +1,52 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "limit",
+    "amount",
+    "eventID",
+    "amountExecuted"
+  ],
+  "properties": {
+    "limit": {
+      "$id": "#/properties/limit",
+      "type": "integer",
+      "title": "The Limit Schema",
+      "default": 0,
+      "examples": [
+        100
+      ]
+    },
+    "amount": {
+      "$id": "#/properties/amount",
+      "type": "integer",
+      "title": "The Amount Schema",
+      "default": 0,
+      "examples": [
+        1000000
+      ]
+    },
+    "eventID": {
+      "$id": "#/properties/eventID",
+      "type": "string",
+      "title": "The Eventid Schema",
+      "default": "",
+      "examples": [
+        "EVENT_ID"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "amountExecuted": {
+      "$id": "#/properties/amountExecuted",
+      "type": "integer",
+      "title": "The Amountexecuted Schema",
+      "default": 0,
+      "examples": [
+        100000
+      ]
+    }
+  }
+}

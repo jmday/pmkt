@@ -1,0 +1,330 @@
+{
+  # This is a holochain scaffold yaml definition. http://ceptr.org/projects/holochain
+
+  # DNA File Version
+  # Version indicator for changes to DNA
+  "Version": "0.0.1",
+  "Generator": "hc-scaffold:0.1.0+e8a394b",
+
+  # Application DNA
+  # The DNA specifies the entry structure and functions and configuration of your application
+  "DNA": {
+
+    # DNA File Version
+    # Version indicator for changes to DNA
+    "Version": 1,
+
+    # DNA Unique ID
+    # This ID differentiates your app from others. For example, to tell one Slack team from another which same code.
+    "UUID": "2039a40d-d27a-442b-85c5-c325a9d42e4a",
+
+    # Application Name
+    # What would you like to call your holochain app?
+    "Name": "predictionMarket",
+
+    # Properties
+    # Properties that you want available across all Zomes.
+    "Properties": {
+
+      # Application Description
+      # Briefly describe your holochain app.
+      "description": "MVP Prediction Market",
+
+      # Language
+      # The base (human) language of this holochain app.
+      "language": "en"
+    },
+
+    # Properties Schema File
+    # Describes the entries in the Properties section of your dna file.
+    "PropertiesSchemaFile": "properties_schema.json",
+
+    # DHT Settings
+    # Configure the properties of your Distributed Hash Table (e.g. hash algorithm, neighborhood size, etc.).
+    "DHTConfig": {
+      "HashType": "sha2-256"
+    },
+
+    # Zomes
+    # List the Zomes your application will support.
+    "Zomes": [
+      {
+
+        # Zome Name
+        # The name of this code module.
+        "Name": "predictedEvent",
+
+        # Zome Description
+        # What is the purpose of this module?
+        "Description": "Event predicted to occur or not by a specific date. Allows speculation.",
+
+        # Ribosome Type
+        # What scripting language will you code in?
+        "RibosomeType": "js",
+
+        # Code File
+        # Points to the main script file for this Zome.
+        "CodeFile": "predictedevent.js",
+
+        # Zome Entries
+        # Data stored and tracked by your Zome.
+        "Entries": [
+          {
+            "Name": "event", # The name of this entry.
+            "Required": true, # Is this entry required?
+            "DataFormat": "json", # What type of data should this entry store?
+            "Sharing": "public", # Should this entry be publicly accessible?
+            "Schema": "{\n  \"definitions\": {},\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"$id\": \"http://example.com/root.json\",\n  \"type\": \"object\",\n  \"title\": \"The Root Schema\",\n  \"required\": [\n    \"mktName\",\n    \"mktDescription\",\n    \"endDate\",\n    \"outcome\"\n  ],\n  \"properties\": {\n    \"mktName\": {\n      \"$id\": \"#/properties/mktName\",\n      \"type\": \"string\",\n      \"title\": \"The Mktname Schema\",\n      \"default\": \"\",\n      \"examples\": [\n        \"Trump Impeachment\"\n      ],\n      \"pattern\": \"^(.*)$\"\n    },\n    \"mktDescription\": {\n      \"$id\": \"#/properties/mktDescription\",\n      \"type\": \"string\",\n      \"title\": \"The Mktdescription Schema\",\n      \"default\": \"\",\n      \"examples\": [\n        \"Will Trump be impeached by Jan 1, 2020\"\n      ],\n      \"pattern\": \"^(.*)$\"\n    },\n    \"endDate\": {\n      \"$id\": \"#/properties/endDate\",\n      \"type\": \"string\",\n      \"title\": \"The Enddate Schema\",\n      \"default\": \"\",\n      \"examples\": [\n        \"2020-01-01T04:00:00.000Z\"\n      ],\n      \"pattern\": \"^(.*)$\"\n    },\n    \"outcome\": {\n      \"$id\": \"#/properties/outcome\",\n      \"type\": \"boolean\",\n      \"title\": \"The Outcome Schema\",\n      \"default\": false,\n      \"examples\": [\n        true\n      ]\n    }\n  }\n}",
+            "_": "cru"
+          },
+          {
+            "Name": "limitOrder", # The name of this entry.
+            "Required": true, # Is this entry required?
+            "DataFormat": "json", # What type of data should this entry store?
+            "Sharing": "public", # Should this entry be publicly accessible?
+            "Schema": "{\n  \"definitions\": {},\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"$id\": \"http://example.com/root.json\",\n  \"type\": \"object\",\n  \"title\": \"The Root Schema\",\n  \"required\": [\n    \"limit\",\n    \"amount\",\n    \"eventID\",\n    \"amountExecuted\"\n  ],\n  \"properties\": {\n    \"limit\": {\n      \"$id\": \"#/properties/limit\",\n      \"type\": \"integer\",\n      \"title\": \"The Limit Schema\",\n      \"default\": 0,\n      \"examples\": [\n        100\n      ]\n    },\n    \"amount\": {\n      \"$id\": \"#/properties/amount\",\n      \"type\": \"integer\",\n      \"title\": \"The Amount Schema\",\n      \"default\": 0,\n      \"examples\": [\n        1000000\n      ]\n    },\n    \"eventID\": {\n      \"$id\": \"#/properties/eventID\",\n      \"type\": \"string\",\n      \"title\": \"The Eventid Schema\",\n      \"default\": \"\",\n      \"examples\": [\n        \"EVENT_ID\"\n      ],\n      \"pattern\": \"^(.*)$\"\n    },\n    \"amountExecuted\": {\n      \"$id\": \"#/properties/amountExecuted\",\n      \"type\": \"integer\",\n      \"title\": \"The Amountexecuted Schema\",\n      \"default\": 0,\n      \"examples\": [\n        100000\n      ]\n    }\n  }\n}",
+            "_": "cr"
+          }
+        ],
+
+        # Zome Functions
+        # Functions which can be called in your Zome's API.
+        "Functions": [
+          {
+            "Name": "eventCreate", # The name of this function.
+            "CallingType": "json", # Data format for parameters passed to this function.
+            "Exposure": "public", # Level to which is this function exposed.
+            "_": "c:event"
+          },
+          {
+            "Name": "eventRead", # The name of this function.
+            "CallingType": "json", # Data format for parameters passed to this function.
+            "Exposure": "public", # Level to which is this function exposed.
+            "_": "r:event"
+          },
+          {
+            "Name": "eventUpdate", # The name of this function.
+            "CallingType": "json", # Data format for parameters passed to this function.
+            "Exposure": "public", # Level to which is this function exposed.
+            "_": "u:event"
+          },
+          {
+            "Name": "limitOrderCreate", # The name of this function.
+            "CallingType": "json", # Data format for parameters passed to this function.
+            "Exposure": "public", # Level to which is this function exposed.
+            "_": "c:limitOrder"
+          },
+          {
+            "Name": "limitOrderRead", # The name of this function.
+            "CallingType": "json", # Data format for parameters passed to this function.
+            "Exposure": "public", # Level to which is this function exposed.
+            "_": "r:limitOrder"
+          },
+          {
+            "Name": "setEventOutcome", # The name of this function.
+            "CallingType": "json", # Data format for parameters passed to this function.
+            "Exposure": "", # Level to which is this function exposed.
+          },
+          {
+            "Name": "getBalance", # The name of this function.
+            "CallingType": "json", # Data format for parameters passed to this function.
+            "Exposure": "", # Level to which is this function exposed.
+          }
+        ],
+
+        # Zome Source Code
+        # The logic that will control Zome behavior
+        "Code": "'use strict';\n\n// -----------------------------------------------------------------\n//  This stub Zome code file was auto-generated by hc-scaffold\n// -----------------------------------------------------------------\n\n// -----------------------------------------------------------------\n//  Exposed functions with custom logic https://developer.holochain.org/API_reference\n// -----------------------------------------------------------------\n\nfunction eventCreate (eventEntry) {\n  var eventHash = commit(\"event\", eventEntry);\n  return eventHash;\n}\n\nfunction eventRead (eventHash) {\n  var event = get(eventHash);\n  return event;\n}\n\nfunction eventUpdate (eventHash) {\n  var sampleValue={\"mktName\":\"Trump Impeachment\",\"mktDescription\":\"Will Trump be impeached by Jan 1, 2020\",\"endDate\":\"2020-01-01T04:00:00.000Z\",\"outcome\":true,\"extraField\":true};\n  var eventOutHash = update(\"event\", sampleValue, eventHash);\n  return eventOutHash;\n}\n\nfunction limitOrderCreate (limitOrderEntry) {\n  var limitOrderHash = commit(\"limitOrder\", limitOrderEntry);\n  return limitOrderHash;\n}\n\nfunction limitOrderRead (limitOrderHash) {\n  var limitOrder = get(limitOrderHash);\n  return limitOrder;\n}\n\nfunction setEventOutcome (params) {\n  // your custom code here\n  return {};\n}\n\nfunction getBalance (params) {\n  // your custom code here\n  return {};\n}\n\n\n// -----------------------------------------------------------------\n//  The Genesis Function https://developer.holochain.org/genesis\n// -----------------------------------------------------------------\n\n/**\n * Called only when your source chain is generated\n * @return {boolean} success\n */\nfunction genesis () {\n  return true;\n}\n\n// -----------------------------------------------------------------\n//  Validation functions for every change to the local chain or DHT\n// -----------------------------------------------------------------\n\n/**\n * Called to validate any changes to the local chain or DHT\n * @param {string} entryName - the type of entry\n * @param {*} entry - the entry data to be set\n * @param {object} header - header for the entry containing properties EntryLink, Time, and Type\n * @param {*} pkg - the extra data provided by the validate[X]Pkg methods\n * @param {object} sources - an array of strings containing the keys of any authors of this entry\n * @return {boolean} is valid?\n */\nfunction validateCommit (entryName, entry, header, pkg, sources) {\n  switch (entryName) {\n    case \"event\":\n      // be sure to consider many edge cases for validating\n      // do not just flip this to true without considering what that means\n      // the action will ONLY be successfull if this returns true, so watch out!\n      return false;\n    case \"limitOrder\":\n      // be sure to consider many edge cases for validating\n      // do not just flip this to true without considering what that means\n      // the action will ONLY be successfull if this returns true, so watch out!\n      return false;\n    default:\n      // invalid entry name\n      return false;\n  }\n}\n\n/**\n * Called to validate any changes to the local chain or DHT\n * @param {string} entryName - the type of entry\n * @param {*} entry - the entry data to be set\n * @param {object} header - header for the entry containing properties EntryLink, Time, and Type\n * @param {*} pkg - the extra data provided by the validate[X]Pkg methods\n * @param {object} sources - an array of strings containing the keys of any authors of this entry\n * @return {boolean} is valid?\n */\nfunction validatePut (entryName, entry, header, pkg, sources) {\n  switch (entryName) {\n    case \"event\":\n      // be sure to consider many edge cases for validating\n      // do not just flip this to true without considering what that means\n      // the action will ONLY be successfull if this returns true, so watch out!\n      return false;\n    case \"limitOrder\":\n      // be sure to consider many edge cases for validating\n      // do not just flip this to true without considering what that means\n      // the action will ONLY be successfull if this returns true, so watch out!\n      return false;\n    default:\n      // invalid entry name\n      return false;\n  }\n}\n\n/**\n * Called to validate any changes to the local chain or DHT\n * @param {string} entryName - the type of entry\n * @param {*} entry - the entry data to be set\n * @param {object} header - header for the entry containing properties EntryLink, Time, and Type\n * @param {string} replaces - the hash for the entry being updated\n * @param {*} pkg - the extra data provided by the validate[X]Pkg methods\n * @param {object} sources - an array of strings containing the keys of any authors of this entry\n * @return {boolean} is valid?\n */\nfunction validateMod (entryName, entry, header, replaces, pkg, sources) {\n  switch (entryName) {\n    case \"event\":\n      // be sure to consider many edge cases for validating\n      // do not just flip this to true without considering what that means\n      // the action will ONLY be successfull if this returns true, so watch out!\n      return false;\n    case \"limitOrder\":\n      // be sure to consider many edge cases for validating\n      // do not just flip this to true without considering what that means\n      // the action will ONLY be successfull if this returns true, so watch out!\n      return false;\n    default:\n      // invalid entry name\n      return false;\n  }\n}\n\n/**\n * Called to validate any changes to the local chain or DHT\n * @param {string} entryName - the type of entry\n * @param {string} hash - the hash of the entry to remove\n * @param {*} pkg - the extra data provided by the validate[X]Pkg methods\n * @param {object} sources - an array of strings containing the keys of any authors of this entry\n * @return {boolean} is valid?\n */\nfunction validateDel (entryName, hash, pkg, sources) {\n  switch (entryName) {\n    case \"event\":\n      // be sure to consider many edge cases for validating\n      // do not just flip this to true without considering what that means\n      // the action will ONLY be successfull if this returns true, so watch out!\n      return false;\n    case \"limitOrder\":\n      // be sure to consider many edge cases for validating\n      // do not just flip this to true without considering what that means\n      // the action will ONLY be successfull if this returns true, so watch out!\n      return false;\n    default:\n      // invalid entry name\n      return false;\n  }\n}\n\n/**\n * Called to validate any changes to the local chain or DHT\n * @param {string} entryName - the type of entry\n * @param {string} baseHash - the hash of the base entry being linked\n * @param {?} links - ?\n * @param {*} pkg - the extra data provided by the validate[X]Pkg methods\n * @param {object} sources - an array of strings containing the keys of any authors of this entry\n * @return {boolean} is valid?\n */\nfunction validateLink (entryName, baseHash, links, pkg, sources) {\n  switch (entryName) {\n    case \"event\":\n      // be sure to consider many edge cases for validating\n      // do not just flip this to true without considering what that means\n      // the action will ONLY be successfull if this returns true, so watch out!\n      return false;\n    case \"limitOrder\":\n      // be sure to consider many edge cases for validating\n      // do not just flip this to true without considering what that means\n      // the action will ONLY be successfull if this returns true, so watch out!\n      return false;\n    default:\n      // invalid entry name\n      return false;\n  }\n}\n\n/**\n * Called to get the data needed to validate\n * @param {string} entryName - the name of entry to validate\n * @return {*} the data required for validation\n */\nfunction validatePutPkg (entryName) {\n  return null;\n}\n\n/**\n * Called to get the data needed to validate\n * @param {string} entryName - the name of entry to validate\n * @return {*} the data required for validation\n */\nfunction validateModPkg (entryName) {\n  return null;\n}\n\n/**\n * Called to get the data needed to validate\n * @param {string} entryName - the name of entry to validate\n * @return {*} the data required for validation\n */\nfunction validateDelPkg (entryName) {\n  return null;\n}\n\n/**\n * Called to get the data needed to validate\n * @param {string} entryName - the name of entry to validate\n * @return {*} the data required for validation\n */\nfunction validateLinkPkg (entryName) {\n  return null;\n}"
+      }
+    ]
+  },
+
+  # TestSets
+  # Auto-Generated test sets for hcdev package
+  "TestSets": [
+    {
+
+      # Name
+      # Name of the Test Set
+      "Name": "predictedEvent",
+      "TestSet": {
+        "Tests": [
+          {
+
+            # Convey
+            # Description of this test
+            "Convey": "auto-generated test for eventCreate",
+
+            # Zome
+            # The zome this test is related to
+            "Zome": "predictedEvent",
+
+            # Function Name
+            # The function to test
+            "FnName": "eventCreate",
+
+            # Input
+            # Input sent to the function
+            "Input": {
+              "mktName": "Trump Impeachment",
+              "mktDescription": "Will Trump be impeached by Jan 1, 2020",
+              "endDate": "2020-01-01T04:00:00.000Z",
+              "outcome": true
+            },
+
+            # Output
+            # Output from the function to validate
+            "Output": "%h%"
+          },
+          {
+
+            # Convey
+            # Description of this test
+            "Convey": "auto-generated test for eventRead",
+
+            # Zome
+            # The zome this test is related to
+            "Zome": "predictedEvent",
+
+            # Function Name
+            # The function to test
+            "FnName": "eventRead",
+
+            # Input
+            # Input sent to the function
+            "Input": "%h%",
+
+            # Output
+            # Output from the function to validate
+            "Output": {
+              "mktName": "Trump Impeachment",
+              "mktDescription": "Will Trump be impeached by Jan 1, 2020",
+              "endDate": "2020-01-01T04:00:00.000Z",
+              "outcome": true
+            }
+          },
+          {
+
+            # Convey
+            # Description of this test
+            "Convey": "auto-generated test for eventUpdate",
+
+            # Zome
+            # The zome this test is related to
+            "Zome": "predictedEvent",
+
+            # Function Name
+            # The function to test
+            "FnName": "eventUpdate",
+
+            # Input
+            # Input sent to the function
+            "Input": "%h%",
+
+            # Output
+            # Output from the function to validate
+            "Output": "%h%"
+          },
+          {
+
+            # Convey
+            # Description of this test
+            "Convey": "auto-generated test for limitOrderCreate",
+
+            # Zome
+            # The zome this test is related to
+            "Zome": "predictedEvent",
+
+            # Function Name
+            # The function to test
+            "FnName": "limitOrderCreate",
+
+            # Input
+            # Input sent to the function
+            "Input": {
+              "limit": 100,
+              "amount": 1000000,
+              "eventID": "EVENT_ID",
+              "amountExecuted": 100000
+            },
+
+            # Output
+            # Output from the function to validate
+            "Output": "%h%"
+          },
+          {
+
+            # Convey
+            # Description of this test
+            "Convey": "auto-generated test for limitOrderRead",
+
+            # Zome
+            # The zome this test is related to
+            "Zome": "predictedEvent",
+
+            # Function Name
+            # The function to test
+            "FnName": "limitOrderRead",
+
+            # Input
+            # Input sent to the function
+            "Input": "%h%",
+
+            # Output
+            # Output from the function to validate
+            "Output": {
+              "limit": 100,
+              "amount": 1000000,
+              "eventID": "EVENT_ID",
+              "amountExecuted": 100000
+            }
+          },
+          {
+
+            # Convey
+            # Description of this test
+            "Convey": "auto-generated test for setEventOutcome",
+
+            # Zome
+            # The zome this test is related to
+            "Zome": "predictedEvent",
+
+            # Function Name
+            # The function to test
+            "FnName": "setEventOutcome",
+
+            # Input
+            # Input sent to the function
+            "Input": "",
+
+            # Output
+            # Output from the function to validate
+            "Output": {}
+          },
+          {
+
+            # Convey
+            # Description of this test
+            "Convey": "auto-generated test for getBalance",
+
+            # Zome
+            # The zome this test is related to
+            "Zome": "predictedEvent",
+
+            # Function Name
+            # The function to test
+            "FnName": "getBalance",
+
+            # Input
+            # Input sent to the function
+            "Input": "",
+
+            # Output
+            # Output from the function to validate
+            "Output": {}
+          }
+        ]
+      }
+    }
+  ]
+}

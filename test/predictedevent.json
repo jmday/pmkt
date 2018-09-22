@@ -1,0 +1,84 @@
+{
+  "Tests": [
+    {
+      "Convey": "auto-generated test for eventCreate",
+      "Zome": "predictedEvent",
+      "FnName": "eventCreate",
+      "Input": {
+        "mktName": "Trump Impeachment",
+        "mktDescription": "Will Trump be impeached by Jan 1, 2020",
+        "endDate": "2020-01-01T04:00:00.000Z",
+        "outcome": false,
+        "hasOutcome": false
+      },
+      "Output": "%h5%"
+    },
+    {
+      "Convey": "auto-generated test for eventRead",
+      "Zome": "predictedEvent",
+      "FnName": "eventRead",
+      "Input": "%h5%",
+      "Output": {
+        "mktName": "Trump Impeachment",
+        "mktDescription": "Will Trump be impeached by Jan 1, 2020",
+        "endDate": "2020-01-01T04:00:00.000Z",
+        "outcome": false,
+        "hasOutcome": false
+      }
+    },
+    {
+      "Convey": "auto-generated test for eventUpdate",
+      "Zome": "predictedEvent",
+      "FnName": "eventUpdate",
+      "Input": {
+        "eventHash": "%h5%",
+        "updatedEvent": {
+          "mktName": "Trump Impeachment",
+          "mktDescription": "Will Trump be impeached by Jan 1, 2020",
+          "endDate": "2020-01-01T04:00:00.000Z",
+          "outcome": false,
+          "hasOutcome": true
+        }
+      },
+      "Output": "%h%"
+    },
+    {
+      "Convey": "auto-generated test for limitOrderCreate",
+      "Zome": "predictedEvent",
+      "FnName": "limitOrderCreate",
+      "Input": {
+        "limit": 100,
+        "amount": 1000000,
+        "eventID": "%h%",
+        "amountExecuted": 100000
+      },
+      "Output": "%h3%"
+    },
+    {
+      "Convey": "auto-generated test for limitOrderRead",
+      "Zome": "predictedEvent",
+      "FnName": "limitOrderRead",
+      "Input": "%h%",
+      "Output": {
+        "limit": 100,
+        "amount": 1000000,
+        "eventID": "%h1%",
+        "amountExecuted": 100000
+      }
+    },
+    {
+      "Convey": "auto-generated test for setEventOutcome",
+      "Zome": "predictedEvent",
+      "FnName": "setEventOutcome",
+      "Input": "",
+      "Output": {}
+    },
+    {
+      "Convey": "auto-generated test for getBalance",
+      "Zome": "predictedEvent",
+      "FnName": "getBalance",
+      "Input": "",
+      "Output": {}
+    }
+  ]
+}
