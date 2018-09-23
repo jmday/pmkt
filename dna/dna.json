@@ -38,7 +38,11 @@
         {
           "Name": "eventOrderLink",
           "DataFormat": "links"
-        }
+        },
+        {
+          "Name": "eventsListLink",
+          "DataFormat": "links"
+        }        
       ],
       "Functions": [
         {
@@ -48,11 +52,6 @@
         },
         {
           "Name": "eventRead",
-          "CallingType": "json",
-          "Exposure": "public"
-        },
-        {
-          "Name": "eventUpdate",
           "CallingType": "json",
           "Exposure": "public"
         },

@@ -19,6 +19,46 @@ function anchorExists(anchorType, anchorText) {
   });
 }
 
+function linkEvent(eventHash) {
+  var eventAnchor = anchor('', 'events');
+  var eventsListLinkHash = commit('eventsListLink', {
+    Links: [
+      {
+        Base: eventAnchor,
+        Link: eventHash,
+        Tag: 'event'
+      }
+    ]
+  })
+}
+
+function unlinkEvent(eventHash) {
+  var eventAnchor = anchor('', 'events');
+  commit('eventsListLink', {
+    Links: [
+      {
+        Base: eventAnchor,
+        Link: eventHash,
+        Tag: 'event',
+        LinkAction: HC.LinkAction.Del
+      }
+    ]
+  })
+}
+
+function linkOldEvent(eventHash, newEventHash) {
+  commit('eventsListLink', {
+    Links: [
+      {
+        Base: eventHash,
+        Link: newEventHash,
+        Tag: 'eventWithOutcome'
+      }
+    ]
+  })
+}
+
+
 // -----------------------------------------------------------------
 //  Exposed functions with custom logic https://developer.holochain.org/API_reference
 // -----------------------------------------------------------------
@@ -26,23 +66,22 @@ function anchorExists(anchorType, anchorText) {
 function eventCreate (eventEntry) {
   var eventHash = commit("event", eventEntry);
 
-  var eventAnchor = anchor('event', eventHash);
+  linkEvent(eventHash)
 
   return eventHash;
 }
 
 function eventRead (eventHash) {
-  var event = get(eventHash);
+  var eventWithOutcome = getLinks(eventHash, 'eventWithOutcome', { Load: true })
+
+  var event
+  if (eventWithOutcome.length > 0) {
+    event = eventWithOutcome
+  } else {
+    event = get(eventHash);
+  }
+
   return event;
-}
-
-function eventUpdate (updateObject) {
-  var eventHash = updateObject.eventHash
-  var updatedValue = updateObject.updatedValue
-
-  var eventOutHash = update("event", updatedValue, eventHash);
-
-  return eventOutHash;
 }
 
 function limitOrderCreate (limitOrderEntry) {
@@ -85,16 +124,35 @@ function limitOrderRead (limitOrderHash) {
 function setEventOutcome (eventHash, eventOutcome) {
   // your custom code here
   var event = eventRead(eventHash)
-  event.outcome = eventOutcome
-  event.hasOutcome = true
+  if (!event.hasOutcome) {  
+    event.outcome = eventOutcome
+    event.hasOutcome = true
 
-  var newEventHash = eventUpdate({"eventHash": eventHash, "updatedEvent": event})
+    var newEventHash = eventCreate(event)
+    unlinkEvent(eventHash)
+    linkOldEvent(eventHash, newEventHash)
+  }
+  return event.hasOutcome
+}
 
-  return newEventHash;
+function outcomePayout() {
+  return false
+}
+
+function getEvents () {
+  var events = getLinks(anchor('', 'events'), 'event', { Load: true });
+
+  // Alternative method
+  // var eventHashes = getLinks(anchor('', 'events'), 'event');
+  // var events = [];
+  // eventHashes.forEach(function(eventHash) {
+  //   events.push(getEvent(eventHash));
+  // });  
+
+  return events;
 }
 
 function getBalance () {
-  // your custom code here
   var me = Apps.Agent.Hash
 
   var orders = getLinks(me, 'userOrders', { Load: true })
